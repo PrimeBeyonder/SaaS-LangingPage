@@ -6,7 +6,7 @@ import noodleImage from "@/assets/noodle.png";
 
 const Hero = () => {
   return (
-      <section className="pt-8 pb-20 md:pt-5 md:pb-10 overflow-x-clip"
+      <section className="pt-8 pb-20 md:pt-5 md:pb-20 overflow-x-clip"
                style={{background: 'radial-gradient(ellipse 200% 100% at bottom left, #183EC2, #EAEEFE 86%)'}}>
           <div className="container">
               <div className="md:flex items-center">
