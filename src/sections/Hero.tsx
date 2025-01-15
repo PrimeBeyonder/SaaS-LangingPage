@@ -14,7 +14,7 @@ const Hero = () => {
                       <div className="text-sm inline-flex border border-[#222]/10 px-3 py-1 rounded-lg"> Version 2.0 Is
                           Here
                       </div>
-                      <h1 className="text-5xl md:text-7xl font-bold tracking-tighter bg-gradient-to-b from-black to-[#001E80] bg-clip-text mt-6 text-transparent">Pathway
+                      <h1 className="tag">Pathway
                           To Productivity</h1>
                       <p className="text-xl text-[#010D3E] tracking-tight mt-6 ">Celebrate the joy of accomplishment with an
                           app designed to track your progress and motivate your efforts.</p>
