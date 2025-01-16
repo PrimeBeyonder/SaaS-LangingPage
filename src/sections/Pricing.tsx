@@ -53,9 +53,9 @@ const pricingTiers = [
 export const Pricing = () => {
   return (
     <section className="container">
-      <h1>Pricing</h1>
-      <p className="">
-
+      <h1 className="description">Pricing</h1>
+      <p className="title">
+      Celebrate the joy of accomplishment with an app designed to track your progress and motivate your efforts.const pricingTiers
       </p>
 
     </section>

@@ -11,9 +11,10 @@ export const ProductShowcase = () => {
           <div className="flex justify-center">
            <div className="tag">Boots Your Productivity</div>
           </div>
-          <h2 className="text-center text-3xl md:text-[54px] md:leading-[60px] font-bold tracking-tighter bg-gradient-to-b from-black to-[#001E80] bg-clip-text mt-6 text-transparent">A More Effective Way To Track Progess</h2>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium nesciunt magni ad esse, quaerat velit voluptates sequi maiores aspernatur, voluptatem iure autem repellendus laboriosam sunt dignissimos, optio molestiae error odio?
-          <p className="text-center text-[22px] leading-[30px] tracking-tight text-[#010D3E] mt-5">
+          <h2 className="description">A More Effective Way To Track Progess</h2>
+           
+          <p className="title mt-5">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium nesciunt magni ad esse, quaerat velit voluptates sequi maiores aspernatur, voluptatem iure autem repellendus laboriosam sunt dignissimos, optio molestiae error odio?
           </p>
         </div>
         <div className="relative">
