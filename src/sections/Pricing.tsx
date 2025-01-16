@@ -1,4 +1,10 @@
-import CheckedIcon from "@/assets/check.svg";
+"use client"
+
+import { useState, useEffect } from 'react'
+import dynamic from 'next/dynamic'
+import CheckedIcon from "@/assets/check.svg"
+
+const MotionDiv = dynamic(() => import('framer-motion').then((mod) => mod.motion.div), { ssr: false })
 
 const pricingTiers = [
   {
@@ -50,41 +56,90 @@ const pricingTiers = [
       "Advanced security features",
     ],
   },
-];
+]
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+}
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+    },
+  },
+}
 
 export const Pricing = () => {
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  if (!isClient) {
+    return null
+  }
+
   return (
     <section className="py-24">
       <div className="container">
-        <h1 className="description">Pricing</h1>
-        <p className="title">
+        <h1 className="description my-5">Pricing</h1>
+        <p className="title p-10">
         Celebrate the joy of accomplishment with an app designed to track your progress and motivate your efforts.
         </p>
-        <div>
-        {pricingTiers.map(({ title, monthlyPrice, buttonText, popular, inverse, features }) => {
-          return (
-            <div key={title} className="p-10 border border-[#F1F1F1] rounded-3xl shadow-[0_7px_14px_#EAEAEA]">
-              <h3 className="text-lg font-bold text-black/50">{title}</h3>
+        <MotionDiv
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+        >
+      {pricingTiers.map(({ title, monthlyPrice, buttonText, popular, inverse, features }) => (
+            <MotionDiv
+              key={title}
+              variants={itemVariants}
+              className={`p-10 border border-[#F1F1F1] rounded-3xl shadow-[0_7px_14px_#EAEAEA] flex flex-col h-fit self-end ${
+                inverse ? "bg-black/90 text-white" : "bg-white"
+              }`}
+            >
+              <h3 className={`text-lg font-bold ${inverse ? "text-white" : "text-gray-500"}`}>{title}</h3>
+              {popular && (
+                <span className="bg-yellow-400 text-gray-900 text-xs font-bold px-3 py-1 rounded-full uppercase mt-2 inline-block">
+                  Most Popular
+                </span>
+              )}
               <div className="flex items-baseline gap-2 mt-[30px]">
                 <span className="text-4xl font-bold tracking-tighter leading-none">${monthlyPrice}</span>
-                <span className="font-bold text-black/50 tracking-tight">/month</span>
+                <span className={`font-bold tracking-tight ${inverse ? "text-gray-200" : "text-gray-500"}`}>/month</span>
               </div>
-              <button className="px-4 py-2 rounded-lg font-medium inline-flex justify-center items-center tracking-tight bg-black text-white h-8 w-full mt-[30px]">{buttonText}</button>
-              <ul className="flex flex-col gap-5 mt-8">
-                {features.map((feature: string) => {
-                  return (
-                    <li key={feature} className="flex text-sm items-center gap-5">
-                      <CheckedIcon className="w-6 h-6"/>
-                      <span>{feature}</span>
-                    </li>
-                  );
-                })}
+              <ul className="flex flex-col gap-5 my-8 flex-grow">
+                {features.map((feature: string) => (
+                  <li key={feature} className="flex text-sm items-center gap-5">
+                    <CheckedIcon className={`w-6 h-6 ${inverse ? "text-green-300" : "text-green-500"}`}/>
+                    <span className={inverse ? "text-gray-100" : "text-gray-700"}>{feature}</span>
+                  </li>
+                ))}
               </ul>
-            </div>
-          );
-        })}
-        </div>
+              <button className={`px-4 py-2 rounded-lg font-medium inline-flex justify-center items-center tracking-tight text-white w-full mt-auto transition-colors duration-300 ${
+                inverse ? "bg-white text-black hover:bg-transparent hover:text-white" : "bg-black hover:bg-gray-900"
+              }`}>
+                {buttonText}
+              </button>
+            </MotionDiv>
+          ))}
+        </MotionDiv>
       </div>
     </section>
-  );
-};
+  )
+}
+
