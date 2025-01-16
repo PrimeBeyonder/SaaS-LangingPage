@@ -51,5 +51,13 @@ const pricingTiers = [
 ];
 
 export const Pricing = () => {
-  return null;
+  return (
+    <section className="container">
+      <h1>Pricing</h1>
+      <p className="">
+
+      </p>
+
+    </section>
+  );
 };
