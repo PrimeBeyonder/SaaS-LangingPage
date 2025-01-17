@@ -8,6 +8,8 @@ import avatar7 from "@/assets/avatar-7.png";
 import avatar8 from "@/assets/avatar-8.png";
 import avatar9 from "@/assets/avatar-9.png";
 
+import Image from "next/image";
+
 const testimonials = [
   {
     text: "As a seasoned designer always on the lookout for innovative tools, Framer.com instantly grabbed my attention.",
@@ -64,6 +66,9 @@ const testimonials = [
     username: "@casey09",
   },
 ];
+const firstColumn = testimonials.slice(0, 3);
+const secondColumn = testimonials.slice(3, 6);
+const thirdColumn = testimonials.slice(6, 9);
 
 export const Testimonials = () => {
   return (
@@ -77,6 +82,20 @@ export const Testimonials = () => {
           From intuitive design to powerful features, our app has become an
           essential tool for users around the world.
         </p>
+        <div className="flex flex-col gap-7 mt-10">
+          {firstColumn.map(({ text, imageSrc, name, username}, index) => (
+            <div key={index} className="card">
+              <div>{text}</div>
+              <div className="flex items-center gap-3 mt-6 ">
+                <Image src={imageSrc} alt={name} width={40} height={40} className="h-10 w-10 rounded-full "/>
+                <div className="flex flex-col">
+                  <div className=" font-medium tracking-tight leading-5">{name}</div>
+                  <div className=" tracking-tight leading-5">{username}</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
