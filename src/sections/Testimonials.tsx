@@ -82,15 +82,27 @@ export const Testimonials = () => {
           From intuitive design to powerful features, our app has become an
           essential tool for users around the world.
         </p>
-        <div className="flex flex-col gap-7 mt-10">
-          {firstColumn.map(({ text, imageSrc, name, username}, index) => (
+        <div
+          className="flex flex-col gap-7 mt-10"
+          style={{
+            maskImage: 'linear-gradient(to bottom, transparent, black 25%, black 75%, transparent)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 25%, black 75%, transparent)', // For Safari support
+          }}
+        >
+          {firstColumn.map(({ text, imageSrc, name, username }, index) => (
             <div key={index} className="card">
               <div>{text}</div>
               <div className="flex items-center gap-3 mt-6 ">
-                <Image src={imageSrc} alt={name} width={40} height={40} className="h-10 w-10 rounded-full "/>
+                <Image
+                  src={imageSrc}
+                  alt={name}
+                  width={40}
+                  height={40}
+                  className="h-10 w-10 rounded-full "
+                />
                 <div className="flex flex-col">
-                  <div className=" font-medium tracking-tight leading-5">{name}</div>
-                  <div className=" tracking-tight leading-5">{username}</div>
+                  <div className="font-medium tracking-tight leading-5">{name}</div>
+                  <div className="tracking-tight leading-5">{username}</div>
                 </div>
               </div>
             </div>
