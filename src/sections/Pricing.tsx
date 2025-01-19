@@ -1,145 +1,132 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from 'react'
-import dynamic from 'next/dynamic'
-import CheckedIcon from "@/assets/check.svg"
-
-const MotionDiv = dynamic(() => import('framer-motion').then((mod) => mod.motion.div), { ssr: false })
-
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import Check from "@/assets/check.svg";
 const pricingTiers = [
   {
-    title: "Free",
-    monthlyPrice: 0,
-    buttonText: "Get started for free",
-    popular: false,
-    inverse: false,
+    title: "Essential",
+    monthlyPrice: 29,
+    buttonText: "Choose Essential",
     features: [
       "Up to 5 project members",
       "Unlimited tasks and projects",
-      "2GB storage",
-      "Integrations",
-      "Basic support",
+      "5GB cloud storage",
+      "Basic integrations",
+      "Priority email support",
     ],
   },
   {
-    title: "Pro",
-    monthlyPrice: 9,
-    buttonText: "Sign up now",
+    title: "Professional",
+    monthlyPrice: 79,
+    buttonText: "Choose Professional",
     popular: true,
-    inverse: true,
     features: [
       "Up to 50 project members",
       "Unlimited tasks and projects",
-      "50GB storage",
-      "Integrations",
-      "Priority support",
-      "Advanced support",
-      "Export support",
+      "100GB cloud storage",
+      "Advanced integrations",
+      "24/7 phone and email support",
+      "Advanced analytics",
+      "Custom branding options",
     ],
   },
   {
-    title: "Business",
-    monthlyPrice: 19,
-    buttonText: "Sign up now",
-    popular: false,
-    inverse: false,
+    title: "Enterprise",
+    monthlyPrice: 199,
+    buttonText: "Contact Sales",
     features: [
-      "Up to 5 project members",
+      "Unlimited project members",
       "Unlimited tasks and projects",
-      "200GB storage",
-      "Integrations",
+      "Unlimited cloud storage",
+      "Custom integrations",
       "Dedicated account manager",
-      "Custom fields",
-      "Advanced analytics",
-      "Export capabilities",
-      "API access",
+      "On-site training and support",
       "Advanced security features",
+      "Custom contract terms",
     ],
   },
-]
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-}
-
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      type: "spring",
-      stiffness: 100,
-    },
-  },
-}
+];
 
 export const Pricing = () => {
-  const [isClient, setIsClient] = useState(false)
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
 
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
-
-  if (!isClient) {
-    return null
-  }
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+  const scale = useTransform(
+    scrollYProgress,
+    [0, 0.2, 0.8, 1],
+    [0.95, 1, 1, 0.95]
+  );
 
   return (
-    <section className="py-24">
-      <div className="container">
-        <h1 className="description my-5">Pricing</h1>
-        <p className="title p-10">
-        Celebrate the joy of accomplishment with an app designed to track your progress and motivate your efforts.
+    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white" ref={containerRef}>
+      <motion.div className="max-w-7xl mx-auto" style={{ opacity, scale }}>
+        <h2 className="description mb-4">Choose Your Plan</h2>
+        <p className="title max-w-4xl mx-auto py-10">
+          Elevate your productivity with our tailored pricing options. Select
+          the plan that aligns with your ambitions and watch your projects soar.
         </p>
-        <MotionDiv
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
-        >
-      {pricingTiers.map(({ title, monthlyPrice, buttonText, popular, inverse, features }) => (
-            <MotionDiv
-              key={title}
-              variants={itemVariants}
-              className={`p-10 border border-[#F1F1F1] rounded-3xl shadow-[0_7px_14px_#EAEAEA] flex flex-col h-fit self-end ${
-                inverse ? "bg-black/90 text-white" : "bg-white"
-              }`}
-            >
-              <h3 className={`text-lg font-bold ${inverse ? "text-white" : "text-gray-500"}`}>{title}</h3>
-              {popular && (
-                <span className="bg-yellow-400 text-gray-900 text-xs font-bold px-3 py-1 rounded-full uppercase mt-2 inline-block">
-                  Most Popular
-                </span>
-              )}
-              <div className="flex items-baseline gap-2 mt-[30px]">
-                <span className="text-4xl font-bold tracking-tighter leading-none">${monthlyPrice}</span>
-                <span className={`font-bold tracking-tight ${inverse ? "text-gray-200" : "text-gray-500"}`}>/month</span>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+          {pricingTiers.map(
+            ({ title, monthlyPrice, buttonText, popular, features }) => (
+              <div
+                key={title}
+                className={`p-8 rounded-none flex flex-col h-full border ${
+                  popular ? "border-gray-900" : "border-gray-200"
+                }`}
+              >
+                <h3
+                  className={`text-2xl font-serif font-bold mb-2 ${
+                    popular ? "text-gray-900" : "text-gray-700"
+                  }`}
+                >
+                  {title}
+                </h3>
+                {popular && (
+                  <span className="bg-gray-900 text-white text-xs font-bold px-3 py-1 uppercase mb-4 inline-block">
+                    Most Popular
+                  </span>
+                )}
+                <div className="flex items-baseline gap-2 mb-6">
+                  <span
+                    className={`text-5xl font-serif font-bold ${
+                      popular ? "text-gray-900" : "text-gray-700"
+                    }`}
+                  >
+                    ${monthlyPrice}
+                  </span>
+                  <span className="text-gray-500">/month</span>
+                </div>
+                <ul className="flex-grow mb-8 space-y-4">
+                  {features.map((feature) => (
+                    <li key={feature} className="flex items-center gap-3">
+                      <Check
+                        className={`w-5 h-5 ${
+                          popular ? "text-gray-900" : "text-gray-500"
+                        }`}
+                      />
+                      <span className="text-gray-600">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  className={`px-6 py-3 font-medium text-center w-full transition-colors duration-300 ${
+                    popular
+                      ? "bg-gray-900 text-white hover:bg-gray-800"
+                      : "bg-white text-gray-900 border border-gray-900 hover:bg-gray-50"
+                  }`}
+                >
+                  {buttonText}
+                </button>
               </div>
-              <ul className="flex flex-col gap-5 my-8 flex-grow">
-                {features.map((feature: string) => (
-                  <li key={feature} className="flex text-sm items-center gap-5">
-                    <CheckedIcon className={`w-6 h-6 ${inverse ? "text-green-300" : "text-green-500"}`}/>
-                    <span className={inverse ? "text-gray-100" : "text-gray-700"}>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-              <button className={`px-4 py-2 rounded-lg font-medium inline-flex justify-center items-center tracking-tight text-white w-full mt-auto transition-colors duration-300 ${
-                inverse ? "bg-white text-black hover:bg-transparent hover:text-white" : "bg-black hover:bg-gray-900"
-              }`}>
-                {buttonText}
-              </button>
-            </MotionDiv>
-          ))}
-        </MotionDiv>
-      </div>
+            )
+          )}
+        </div>
+      </motion.div>
     </section>
-  )
-}
-
+  );
+};
